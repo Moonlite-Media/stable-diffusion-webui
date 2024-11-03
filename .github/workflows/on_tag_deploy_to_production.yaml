@@ -58,7 +58,7 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no .env ${{ secrets.PROD_EC2_USER }}@${{ secrets.PROD_EC2_HOST }}:/home/${{ secrets.PROD_EC2_USER }}/.env
 
-      - name: SSH into EC2 and install dependencies
+      - name: SSH into EC2, install dependencies and run docker image
         run: |
           ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=60 -o StrictHostKeyChecking=no ${{ secrets.PROD_EC2_USER }}@${{ secrets.PROD_EC2_HOST }} << 'EOF1'
             # Navigate to your project directory (update if necessary)
