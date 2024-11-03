@@ -34,8 +34,9 @@ RUN mkdir -p extensions && \
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-# Copy the .env file from the GitHub Action if it’s created at build time
-# COPY .env ./.env
+# Install other external dependencies
+RUN pip install python-dotenv
+RUN pip install insightface
 
 # Run the application
 CMD ["python", "launch.py", "--nowebui", "--deforum-api", "--api", "--skip-torch-cuda-test"]
