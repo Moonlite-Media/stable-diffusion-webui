@@ -58,13 +58,29 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no .env ${{ secrets.PROD_EC2_USER }}@${{ secrets.PROD_EC2_HOST }}:/home/${{ secrets.PROD_EC2_USER }}/.env
 
-      - name: SSH into EC2 and run Docker image
+      - name: SSH into EC2 and install dependencies
         run: |
           ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=60 -o StrictHostKeyChecking=no ${{ secrets.PROD_EC2_USER }}@${{ secrets.PROD_EC2_HOST }} << 'EOF1'
+            # Navigate to your project directory (update if necessary)
+            cd /path/to/your/project
+
+            # Install Python dependencies
+            if [ -f requirements.txt ]; then
+              while read -r package; do
+                if ! pip show "${package}" > /dev/null 2>&1; then
+                  echo "Installing ${package}..."
+                  pip install "${package}"
+                else
+                  echo "${package} is already installed."
+                fi
+              done < requirements.txt
+            else
+              echo "requirements.txt not found."
+            fi
+
             # Log in to ECR
             docker login -u AWS -p $(aws ecr get-login-password --region ${{ secrets.PROD_AWS_REGION }}) ${{ secrets.PROD_ECR_URI }}
-
-           
+            
             # Pull the latest Docker image
             docker pull ${{ secrets.PROD_ECR_URI }}:latest
 
