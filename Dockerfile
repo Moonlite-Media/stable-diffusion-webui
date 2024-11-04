@@ -56,4 +56,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install --no-cache-dir python-dotenv insightface
 
 # Run the application
-CMD ["python", "launch.py", "--nowebui", "--deforum-api", "--api", "--skip-torch-cuda-test"]
+CMD ["python", "launch.py", "--nowebui", "--deforum-api", "--api", "--port", "7861"]
