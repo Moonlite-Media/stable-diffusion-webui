@@ -14,7 +14,7 @@ class BasicAuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request, call_next):
         # Extract the Authorization header
         logger.warning(f"{request.headers}")
-        auth_header = request.headers.get("Authorization")
+        auth_header = request.headers.get("Authorization") or request.headers.get("authorization")
         if not auth_header or not auth_header.startswith("Basic "):
             return self._unauthorized_response()
 
@@ -24,6 +24,7 @@ class BasicAuthMiddleware(BaseHTTPMiddleware):
             # We should add a step to santize the input here
             decoded_credentials = base64.b64decode(encoded_credentials).decode("utf-8")
             provided_username, provided_password = decoded_credentials.split(":")
+            logger.warning(f"provided_username: {provided_username}: provided_password: {provided_password}")
 
             # Check credentials
             if provided_username == self.username and provided_password == self.password:
