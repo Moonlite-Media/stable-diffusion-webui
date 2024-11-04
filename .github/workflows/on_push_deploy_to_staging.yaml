@@ -6,7 +6,7 @@ on:
       - master
     paths:
       - ".github/workflows/on_push_deploy_to_staging.yaml"
-
+      # TODO: Decide if we want to add other file changes here. 
 jobs:
   deploy:
     runs-on: ubuntu-latest
