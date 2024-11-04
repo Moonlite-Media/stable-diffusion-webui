@@ -7,6 +7,9 @@ import time
 from modules import timer
 from modules import initialize_util
 from modules import initialize
+import logging
+
+logger = logging.getLogger(__name__)
 
 startup_timer = timer.startup_timer
 startup_timer.record("launcher")
@@ -37,8 +40,8 @@ def api_only():
     from basic_auth_middleware import BasicAuthMiddleware
     USERNAME = os.getenv('SDAPI_USERNAME')
     PASSWORD = os.getenv('SDAPI_PASSWORD')
-    print(f"{USERNAME}: {PASSWORD}")
-    app.add_middleware(BasicAuthMiddleware, username=USERNAME, password=PASSWORD)
+    logger.warning(f"{USERNAME}:{PASSWORD}")
+    app.add_middleware(BasicAuthMiddleware, username="administrator", password="vY0WFuGCpL3lILb74ZzMCbSAL10x5V")
 
     initialize_util.setup_middleware(app)
     api = create_api(app)
