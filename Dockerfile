@@ -1,17 +1,16 @@
-# Use an official Python runtime as the base image
+# Use an official CUDA runtime as the base image
 FROM nvidia/cuda:12.2.2-runtime-ubuntu22.04
 
 # Set environment variables
-ENV STABLE_DIFFUSION_API_PORT=7861
 ENV WORKDIR /app
 
-# Create a working directory and set permissions
+# Create a working directory
 RUN mkdir -p $WORKDIR
 WORKDIR $WORKDIR
 
 # Install Python, pip, and other necessary dependencies
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip git wget && \
+    apt-get install -y python3 python3-pip git wget libgl1 && \
     ln -s /usr/bin/python3 /usr/bin/python && \
     rm -rf /var/lib/apt/lists/*
 
@@ -32,11 +31,10 @@ RUN mkdir -p extensions && \
 
 # Install Python dependencies
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Install other external dependencies
-RUN pip install python-dotenv
-RUN pip install insightface
+# Install other external dependencies in a single command
+RUN pip install --no-cache-dir python-dotenv insightface
 
 # Run the application
 CMD ["python", "launch.py", "--nowebui", "--deforum-api", "--api", "--skip-torch-cuda-test"]
