@@ -8,14 +8,33 @@ ENV WORKDIR /app
 RUN mkdir -p $WORKDIR
 WORKDIR $WORKDIR
 
+RUN apt-get update
+
 # Install Python, pip, and other necessary dependencies
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip git wget libgl1 && \
+    apt-get install -y \
+    python3 \
+    python3-pip \
+    git \
+    wget \
+    libgl1 && \
     ln -s /usr/bin/python3 /usr/bin/python && \
     rm -rf /var/lib/apt/lists/*
 
+# Upgrade pip to the latest version
+RUN pip install --upgrade pip
+
+# Install the 'xformers' Python package
+RUN pip install xformers
+
+# Install additional system packages
+RUN apt-get update && apt-get install -y ffmpeg libsm6 libxext6 libgl1 python3.10-venv --no-install-recommends google-perftools wget
+
 # Clone the stable-diffusion-webui repository
 RUN git clone https://github.com/Moonlite-Media/stable-diffusion-webui.git .
+
+# Copy local files into the container
+COPY . .
 
 # Set up models folder and download required models
 RUN mkdir -p models && \
