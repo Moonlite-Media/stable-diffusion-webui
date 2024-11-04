@@ -2,7 +2,9 @@ import base64
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response
 from fastapi import FastAPI
+import logging
 
+logger = logging.getLogger(__name__)
 class BasicAuthMiddleware(BaseHTTPMiddleware):
     def __init__(self, app, username: str, password: str):
         super().__init__(app)
@@ -11,6 +13,7 @@ class BasicAuthMiddleware(BaseHTTPMiddleware):
 
     async def dispatch(self, request, call_next):
         # Extract the Authorization header
+        logger.warning(f"{request.headers}")
         auth_header = request.headers.get("Authorization")
         if not auth_header or not auth_header.startswith("Basic "):
             return self._unauthorized_response()
