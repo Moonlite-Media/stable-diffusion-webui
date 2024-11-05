@@ -40,8 +40,8 @@ def api_only():
     from basic_auth_middleware import BasicAuthMiddleware
     USERNAME = os.getenv('SDAPI_USERNAME')
     PASSWORD = os.getenv('SDAPI_PASSWORD')
-    logger.warning(f"{USERNAME}:{PASSWORD}")
-    app.add_middleware(BasicAuthMiddleware, username="administrator", password="vY0WFuGCpL3lILb74ZzMCbSAL10x5V")
+
+    app.add_middleware(BasicAuthMiddleware, username=USERNAME, password=PASSWORD)
 
     initialize_util.setup_middleware(app)
     api = create_api(app)
