@@ -6,8 +6,12 @@ on:
       - master
     paths:
       - ".github/workflows/on_push_deploy_to_staging.yaml"
+<<<<<<< Updated upstream
       # TODO: Decide if we want to add other file changes here. 
       # TODO: Decide how we handle updating this forked copy.
+=======
+      # TODO: Decide if we want to add other file changes here.
+>>>>>>> Stashed changes
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -77,6 +81,8 @@ jobs:
             
             # Run the new Docker container
             docker run --gpus all -d -p 7861:7861 --name moonlite-sd \
+              -v /home/ec2-user/apps/stable-diffusion-webui/outputs/img2img-images:/outputs/img2img-images \
+              -v /home/ec2-user/apps/media_root:/home/ec2-user/apps/media_root \
               --env-file /home/${{ secrets.STAGING_EC2_USER }}/.env \
               ${{ secrets.STAGING_ECR_URI }}:latest
             
