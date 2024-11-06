@@ -9,7 +9,7 @@ RUN mkdir -p $WORKDIR
 WORKDIR $WORKDIR
 
 # Create the outputs/img2img-images folder
-RUN mkdir -p /outputs/img2img-images
+RUN mkdir -p /home/ec2-user/apps/stable-diffusion-webui/outputs/img2img-images
 RUN mkdir -p /home/ec2-user/apps/media_root
 
 RUN apt-get update
