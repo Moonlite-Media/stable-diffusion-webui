@@ -5,8 +5,8 @@ on:
     branches:
       - master
     paths:
-      - 'Dockerfile'
-      - '.github/workflows/on_push_deploy_to_staging.yaml'
+      - "Dockerfile"
+      - ".github/workflows/on_push_deploy_to_staging.yaml"
       # TODO: Decide if we want to add other file changes here.
       # TODO: Decide how we handle updating this forked copy.
 jobs:
