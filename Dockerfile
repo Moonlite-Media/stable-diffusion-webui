@@ -49,28 +49,28 @@ RUN mkdir -p models && \
 RUN cd models && \
     mkdir -p Lora && \
     cd Lora && \
-    wget -q "https://civitai.com/api/download/models/7657?type=Model&format=SafeTensor&size=full&fp=fp16" \
-    wget -q "https://civitai.com/api/download/models/678485?type=Model" \
-    wget -q "https://civitai.com/api/download/models/630255?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/637299?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/635271?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/627728?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/640781?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/621148?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/630663?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/612920?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/611327?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/318915?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/213507?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/77019?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/865690?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/72282?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/104225?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/376609?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/233018?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/236248?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/143715?type=Model&format=SafeTensor" \
-    wget -q "https://civitai.com/api/download/models/489577?type=Model&format=SafeTensor" \
+    wget -q "https://civitai.com/api/download/models/7657?type=Model&format=SafeTensor&size=full&fp=fp16" && \
+    wget -q "https://civitai.com/api/download/models/678485?type=Model" && \
+    wget -q "https://civitai.com/api/download/models/630255?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/637299?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/635271?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/627728?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/640781?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/621148?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/630663?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/612920?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/611327?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/318915?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/213507?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/77019?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/865690?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/72282?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/104225?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/376609?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/233018?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/236248?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/143715?type=Model&format=SafeTensor"  && \
+    wget -q "https://civitai.com/api/download/models/489577?type=Model&format=SafeTensor"  && \
     wget -q "https://civitai.com/api/download/models/46621?type=Model&format=SafeTensor "
 
 # Set up extensions folder and clone repositories
