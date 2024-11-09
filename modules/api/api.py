@@ -209,6 +209,10 @@ class Api:
         self.queue_lock = queue_lock
         api_middleware(self.app)
         self.add_api_route("/sdapi/v1/txt2img", self.text2imgapi, methods=["POST"], response_model=models.TextToImageResponse)
+
+        # Add health check endpoint
+        self.add_api_route("/sdapi/v1/status", self.health_check, methods=["GET"])
+        
         self.add_api_route("/sdapi/v1/img2img", self.img2imgapi, methods=["POST"], response_model=models.ImageToImageResponse)
         self.add_api_route("/sdapi/v1/extra-single-image", self.extras_single_image_api, methods=["POST"], response_model=models.ExtrasSingleImageResponse)
         self.add_api_route("/sdapi/v1/extra-batch-images", self.extras_batch_images_api, methods=["POST"], response_model=models.ExtrasBatchImagesResponse)
@@ -270,6 +274,9 @@ class Api:
             self.default_script_arg_img2img = self.init_default_script_args(img2img_script_runner)
 
 
+   # Health check endpoint method
+    async def health_check(self):
+        return JSONResponse(content={"status": "Server is running"}, status_code=200)
 
     def add_api_route(self, path: str, endpoint, **kwargs):
         if shared.cmd_opts.api_auth:
