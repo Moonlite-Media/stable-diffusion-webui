@@ -78,8 +78,8 @@ jobs:
             
             # Run the new Docker container
             docker run --gpus all -d -p 7861:7861 --name moonlite-sd \
-              -v /home/ec2-user/apps/stable-diffusion-webui/outputs/img2img-images:/app/outputs/img2img-images \
-              -v /home/ec2-user/apps/media_root:/home/ec2-user/apps/media_root \
+              -v /home/${{ secrets.STAGING_EC2_USER }}/apps/stable-diffusion-webui/outputs/img2img-images:/app/outputs/img2img-images \
+              -v /home/${{ secrets.STAGING_EC2_USER }}/apps/media_root:/home/${{ secrets.STAGING_EC2_USER }}/apps/media_root \
               --env-file /home/${{ secrets.STAGING_EC2_USER }}/.env \
               ${{ secrets.STAGING_ECR_URI }}:latest
             
