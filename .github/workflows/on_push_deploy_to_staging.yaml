@@ -42,7 +42,7 @@ jobs:
       - name: Build and tag Docker image
         run: |
           # Build the Docker image
-          docker build -t ${{ secrets.STAGING_ECR_URI }}:$IMAGE_TAG .
+          docker build --no-cache -t ${{ secrets.STAGING_ECR_URI }}:$IMAGE_TAG .
 
           # Tag the image as 'latest'
           docker tag ${{ secrets.STAGING_ECR_URI }}:$IMAGE_TAG ${{ secrets.STAGING_ECR_URI }}:latest

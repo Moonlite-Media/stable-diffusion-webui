@@ -12,6 +12,11 @@ class BasicAuthMiddleware(BaseHTTPMiddleware):
         self.password = password
 
     async def dispatch(self, request, call_next):
+
+        # Allow unauthenticated access to the `/sdapi/v1/status` endpoint
+        if request.url.path == "/sdapi/v1/status":
+            return await call_next(request)
+        
         # Extract the Authorization header
         auth_header = request.headers.get("Authorization") or request.headers.get("authorization")
         if not auth_header or not auth_header.startswith("Basic "):
