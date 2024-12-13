@@ -21,6 +21,7 @@ RUN apt-get update && \
     git \
     wget \
     libgl1 && \
+    libvulkan-dev && \
     ln -s /usr/bin/python3 /usr/bin/python && \
     rm -rf /var/lib/apt/lists/*
 
@@ -31,7 +32,7 @@ RUN pip install --upgrade pip
 RUN pip install xformers
 
 # Install additional system packages
-RUN apt-get update && apt-get install -y ffmpeg libsm6 libxext6 libgl1 python3.10-venv --no-install-recommends google-perftools wget
+RUN apt-get update && apt-get install -y ffmpeg libsm6 libxext6 libgl1 libvulkan-dev python3.10-venv --no-install-recommends google-perftools wget
 
 # Clone the stable-diffusion-webui repository
 RUN git clone https://github.com/Moonlite-Media/stable-diffusion-webui.git .
