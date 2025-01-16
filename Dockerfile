@@ -61,3 +61,6 @@ RUN pip install --no-cache-dir python-dotenv insightface
 
 # Run the application
 CMD ["python", "launch.py", "--nowebui", "--deforum-api", "--listen", "--api", "--port", "7861"]
+
+# Add fun fact
+# Dogs are the best!
