@@ -43,7 +43,7 @@ COPY . .
 RUN mkdir -p models && \
     cd models && \
     mkdir -p Stable-diffusion && \
-    wget -q https://huggingface.co/stabilityai/stable-diffusion-2/resolve/main/768-v-ema.safetensors
+    wget -q https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.safetensors
 
 # Set up extensions folder and clone repositories
 RUN mkdir -p extensions && \
