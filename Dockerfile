@@ -37,9 +37,6 @@ RUN TMPDIR=$PIP_TMPDIR pip install --no-cache-dir xformers
 # Clone the stable-diffusion-webui repository
 RUN git clone https://github.com/Moonlite-Media/stable-diffusion-webui.git .
 
-# Copy local files into the container
-COPY . .
-
 # Set up models folder and download required models
 RUN mkdir -p models/Stable-diffusion && \
     wget -q -P models/Stable-diffusion https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.safetensors
@@ -51,8 +48,10 @@ RUN mkdir -p extensions && \
     git clone https://github.com/Mikubill/sd-webui-controlnet && \
     git clone https://github.com/deforum-art/sd-webui-deforum
 
+# Copy local files into the container (this overwrites/adds to the cloned repo)
+COPY . .
+
 # Install Python dependencies
-COPY requirements.txt .
 RUN TMPDIR=$PIP_TMPDIR pip install --no-cache-dir -r requirements.txt
 
 # Install other external dependencies
