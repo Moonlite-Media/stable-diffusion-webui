@@ -2,16 +2,15 @@
 FROM nvidia/cuda:12.2.2-runtime-ubuntu22.04
 
 # Set environment variables
-ENV WORKDIR /app
+ENV WORKDIR=/app
+ENV PIP_TMPDIR=/app/pip-tmp
 
 # Create a working directory
-RUN mkdir -p $WORKDIR
+RUN mkdir -p $WORKDIR $PIP_TMPDIR
 WORKDIR $WORKDIR
 
 # Create the outputs/img2img-images folder
 RUN mkdir -p /home/ec2-user/apps/media_root
-
-RUN apt-get update
 
 # Install Python, pip, and other necessary dependencies
 RUN apt-get update && \
@@ -20,7 +19,12 @@ RUN apt-get update && \
     python3-pip \
     git \
     wget \
-    libgl1 && \
+    libgl1 \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    python3.10-venv \
+    google-perftools && \
     ln -s /usr/bin/python3 /usr/bin/python && \
     rm -rf /var/lib/apt/lists/*
 
@@ -28,10 +32,7 @@ RUN apt-get update && \
 RUN pip install --upgrade pip
 
 # Install the 'xformers' Python package
-RUN pip install xformers
-
-# Install additional system packages
-RUN apt-get update && apt-get install -y ffmpeg libsm6 libxext6 libgl1 python3.10-venv --no-install-recommends google-perftools wget
+RUN TMPDIR=$PIP_TMPDIR pip install --no-cache-dir xformers
 
 # Clone the stable-diffusion-webui repository
 RUN git clone https://github.com/Moonlite-Media/stable-diffusion-webui.git .
@@ -40,10 +41,8 @@ RUN git clone https://github.com/Moonlite-Media/stable-diffusion-webui.git .
 COPY . .
 
 # Set up models folder and download required models
-RUN mkdir -p models && \
-    cd models && \
-    mkdir -p Stable-diffusion && \
-    wget -q https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.safetensors
+RUN mkdir -p models/Stable-diffusion && \
+    wget -q -P models/Stable-diffusion https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.safetensors
 
 # Set up extensions folder and clone repositories
 RUN mkdir -p extensions && \
@@ -54,13 +53,13 @@ RUN mkdir -p extensions && \
 
 # Install Python dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN TMPDIR=$PIP_TMPDIR pip install --no-cache-dir -r requirements.txt
 
-# Install other external dependencies in a single command
-RUN pip install --no-cache-dir python-dotenv insightface
+# Install other external dependencies
+RUN TMPDIR=$PIP_TMPDIR pip install --no-cache-dir python-dotenv insightface
+
+# Clean up pip temp directory
+RUN rm -rf $PIP_TMPDIR
 
 # Run the application
 CMD ["python", "launch.py", "--nowebui", "--deforum-api", "--listen", "--api", "--port", "7861"]
-
-# Add fun fact
-# Dogs are the best!
