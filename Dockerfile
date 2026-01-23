@@ -3,14 +3,10 @@ FROM nvidia/cuda:12.2.2-runtime-ubuntu22.04
 
 # Set environment variables
 ENV WORKDIR=/app
-ENV PIP_TMPDIR=/app/pip-tmp
+ENV PIP_TMPDIR=/tmp/pip-build
 
-# Create a working directory
-RUN mkdir -p $WORKDIR $PIP_TMPDIR
-WORKDIR $WORKDIR
-
-# Create the outputs/img2img-images folder
-RUN mkdir -p /home/ec2-user/apps/media_root
+# Create pip temp directory on main filesystem
+RUN mkdir -p $PIP_TMPDIR
 
 # Install Python, pip, and other necessary dependencies
 RUN apt-get update && \
@@ -35,7 +31,13 @@ RUN pip install --upgrade pip
 RUN TMPDIR=$PIP_TMPDIR pip install --no-cache-dir xformers
 
 # Clone the stable-diffusion-webui repository
-RUN git clone https://github.com/Moonlite-Media/stable-diffusion-webui.git .
+RUN git clone https://github.com/Moonlite-Media/stable-diffusion-webui.git $WORKDIR
+
+# Set working directory
+WORKDIR $WORKDIR
+
+# Create the outputs/img2img-images folder
+RUN mkdir -p /home/ec2-user/apps/media_root
 
 # Set up models folder and download required models
 RUN mkdir -p models/Stable-diffusion && \
@@ -48,7 +50,7 @@ RUN mkdir -p extensions && \
     git clone https://github.com/Mikubill/sd-webui-controlnet && \
     git clone https://github.com/deforum-art/sd-webui-deforum
 
-# Copy local files into the container (this overwrites/adds to the cloned repo)
+# Copy local files into the container (overlays on cloned repo)
 COPY . .
 
 # Install Python dependencies
