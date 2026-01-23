@@ -62,5 +62,8 @@ RUN TMPDIR=$PIP_TMPDIR pip install --no-cache-dir python-dotenv insightface
 # Clean up pip temp directory
 RUN rm -rf $PIP_TMPDIR
 
+# Use community fork since Stability-AI repo is no longer public
+ENV STABLE_DIFFUSION_REPO=https://github.com/w-e-w/stablediffusion.git
+
 # Run the application
 CMD ["python", "launch.py", "--nowebui", "--deforum-api", "--listen", "--api", "--port", "7861"]
